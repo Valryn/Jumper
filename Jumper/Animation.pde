@@ -1,14 +1,13 @@
 class Animation {
   private ArrayList<PImage> animationFrames = new ArrayList<PImage>();
   private int currentFrame = 0;
-  private float scale = 1;
   private float speed = 1;
-  private boolean flipx = false;
   private float frameFractional;
+//private boolean flipx = false;
+//private float scale = 1;
   
   //Slices entire animation sheet by rows and columns
   Animation(String filePath, int rowCount, int columnCount){
-    //TODO: Try/catch if animation sheet doesn't divide evenly
     PImage animationSheet = loadImage(filePath);
     int frameW = animationSheet.width / columnCount;
     int frameH = animationSheet.height / rowCount;
@@ -24,21 +23,31 @@ class Animation {
   
    //Slices one row of an animation sheet given number of rows and columns
    Animation(String filePath, int rowCount, int columnCount, int row){
-    //TODO: Try/catch if animation sheet doesn't divide evenly
     PImage animationSheet = loadImage(filePath);
     int frameW = animationSheet.width / columnCount;
     int frameH = animationSheet.height / rowCount;
     
     //Extract frames from animation sheet
     for(int column = 0; column < columnCount; ++column){
-      animationFrames.add(extractFrame(animationSheet, frameW, frameH, row, column));
+      animationFrames.add(extractFrame(animationSheet, frameW, frameH, row - 1, column));
     }
+  }
+  
+  //Slices one frame of an animation sheet and loads it as an animation
+  Animation(String filePath, int rowCount, int columnCount, int row, int column){
+    PImage animationSheet = loadImage(filePath);
+    int frameW = animationSheet.width / columnCount;
+    int frameH = animationSheet.height / rowCount;
+   
+    //Extract frame from animation sheet
+    animationFrames.add(extractFrame(animationSheet, frameW, frameH, row - 1, column - 1));   
   }
   
   //Draws the current frame
   public void draw(float x, float y){   
     //Loop animation
-    if(currentFrame > animationFrames.size() - 1){
+    if(currentFrame > animationFrames.size() - 1)
+    {
       currentFrame = 0;
       frameFractional = 0;
     }

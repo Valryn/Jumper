@@ -22,14 +22,14 @@ void draw(){
 }
 
 //Catch input
-  void keyPressed(){
-    if(key == 'a' || key == 'A') aInput = true;
-    if(key == 'd' || key == 'D') dInput = true;
-    if(key == ' ') spacebarInput = true;
-  }
-  
-  void keyReleased(){
-    if(key == 'a' || key == 'A') aInput = false;
-    if(key == 'd' || key == 'D') dInput = false;
-    if(key == ' ') spacebarInput = false;
-  }
+void keyPressed(){
+  if(key == 'a' || key == 'A') aInput = true;
+  if(key == 'd' || key == 'D') dInput = true;
+  if(key == ' ') spacebarInput = true;
+}
+
+void keyReleased(){
+  if(key == 'a' || key == 'A') aInput = false;
+  if(key == 'd' || key == 'D') dInput = false;
+  if(key == ' ') spacebarInput = false;
+}
