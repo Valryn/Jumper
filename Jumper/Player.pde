@@ -1,14 +1,18 @@
 class Player {  
+  private final int JUMP_COOLDOWN = 30;
+  private final int JUMP_SPEED = -20;
+  
   private int hitPoints;
+  private float moveSpeed = 3;
+  private float jumpDecay = 0;
+  private int jumpTimer = 0;
+  private float gravity;
+
   
   private PVector position = new PVector();
   private HashMap<String, Animation> animations = new HashMap<String, Animation>();
   private Animation anim;
-  private float moveSpeed = 1;
-  private float jumpSpeed = 0;
-  private float gravity;
-  private int jumpCooldown = 0;
-  
+
   Player(int hp, int xpos, int ypos){    
     position.set(xpos, ypos);
     hitPoints = hp;
@@ -25,19 +29,19 @@ class Player {
   }
   
   public void update(){
-    //Movement:
-    if(keyPressed == true && key == 'd') position.x = position.x + moveSpeed;
-    if(keyPressed == true && key == 'a') position.x = position.x - moveSpeed;
-    if(keyPressed == true && key == 'w' && jumpCooldown <= 0) 
+    //Movement
+    if(dInput) position.x = position.x + moveSpeed;
+    if(aInput) position.x = position.x - moveSpeed;
+    if(spacebarInput && jumpTimer <= 0) 
       {
-        jumpSpeed = -20;
-        jumpCooldown = 50;
+        jumpDecay = JUMP_SPEED;
+        jumpTimer = JUMP_COOLDOWN;
         gravity = 0;
       }
     //Decay jump
-    if(jumpSpeed < 0) ++jumpSpeed;
-    position.y = position.y + jumpSpeed;
-    --jumpCooldown;
+    if(jumpDecay < 0) ++jumpDecay;
+    position.y = position.y + jumpDecay;
+    --jumpTimer;
     
     //Gravity!
     if(position.y < GROUND_LEVEL) position.y = position.y + gravity;
