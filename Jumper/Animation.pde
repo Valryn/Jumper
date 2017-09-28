@@ -1,10 +1,8 @@
-class Animation {
+class Animation{
   private ArrayList<PImage> animationFrames = new ArrayList<PImage>();
   private int currentFrame = 0;
   private float speed = 1;
   private float frameFractional;
-//private boolean flipx = false;
-//private float scale = 1;
   
   //Slices entire animation sheet by rows and columns
   Animation(String filePath, int rowCount, int columnCount){
@@ -44,19 +42,29 @@ class Animation {
   }
   
   //Draws the current frame
-  public void draw(float x, float y){   
+  public void draw(float x, float y){      
+    PImage displayFrame;
+    
     //Loop animation
     if(currentFrame > animationFrames.size() - 1)
     {
       currentFrame = 0;
       frameFractional = 0;
     }
+    
     //Display the image
+    displayFrame = animationFrames.get(currentFrame);
+    
     image(animationFrames.get(currentFrame), x, y);
-   
+    
     //Increment to next frame
     frameFractional = frameFractional + speed;
     currentFrame = (int)frameFractional;
+  }
+  
+  //Draw the current frame but takes a PVector
+  public void draw(PVector position){
+    draw(position.x, position.y);
   }
   
   //Grab 1 frame from an image
@@ -76,14 +84,6 @@ class Animation {
   public PImage getFrame(int frameIndex){
     return animationFrames.get(frameIndex);
   }
-  
-  //public float getScale(){
-  //  return scale;
-  //}
-  
-  //public void setScale(float scale){  
-  //this.scale = scale;  
-  //}
   
   public void setSpeed(float speed){
     this.speed = speed;
