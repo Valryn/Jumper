@@ -4,6 +4,8 @@ class Animation{
   private float speed = 1;
   private float frameFractional;
   
+  private PVector drawOffset = new PVector(0, 0);
+  
   //Slices entire animation sheet by rows and columns
   Animation(String filePath, int rowCount, int columnCount){
     PImage animationSheet = loadImage(filePath);
@@ -36,11 +38,11 @@ class Animation{
     PImage animationSheet = loadImage(filePath);
     int frameW = animationSheet.width / columnCount;
     int frameH = animationSheet.height / rowCount;
-   
+    
     //Extract frame from animation sheet
     animationFrames.add(extractFrame(animationSheet, frameW, frameH, row - 1, column - 1));   
   }
-  
+
   //Draws the current frame
   public void draw(float x, float y){      
     PImage displayFrame;
@@ -55,7 +57,7 @@ class Animation{
     //Display the image
     displayFrame = animationFrames.get(currentFrame);
     
-    image(animationFrames.get(currentFrame), x, y);
+    image(animationFrames.get(currentFrame), x + drawOffset.x, y + drawOffset.y);
     
     //Increment to next frame
     frameFractional = frameFractional + speed;
@@ -87,5 +89,14 @@ class Animation{
   
   public void setSpeed(float speed){
     this.speed = speed;
+  }
+  
+  public void setOffset(PVector offset){
+    drawOffset = offset;
+  }
+  
+  public void setOFfset(int x, int y){
+    drawOffset.x = x;
+    drawOffset.y = y;
   }
 }

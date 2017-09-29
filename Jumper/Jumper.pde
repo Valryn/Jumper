@@ -1,13 +1,15 @@
 //Jumper by Valryn
 
 final float GRAVITY_ACCELERATION = 0.5f;
-final int GROUND_LEVEL = 216;
+final int GROUND_LEVEL = 301;
 
 boolean aInput;
 boolean dInput;
 boolean spacebarInput;
 boolean paused;
 
+ArrayList<Collider> solidColliders = new ArrayList<Collider>();
+Collider levelCollider;
 PImage levelBackground;
 Player player;
 
@@ -18,14 +20,19 @@ void setup(){
   smooth(4);
   
   levelBackground = loadImage("Background Level.png");
-  player = new Player(320, GROUND_LEVEL - 60);
+  //Create level collider
+  levelCollider = new Collider(320, 480, 640, 480 - GROUND_LEVEL, true);
+  solidColliders.add(levelCollider);
+  player = new Player(320, GROUND_LEVEL - 100);
 }
 
 void draw(){
   
   if(!paused){
     background(levelBackground);
+    levelCollider.drawDebug();
     player.update();
+
   }
 }
 
